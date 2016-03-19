@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+sudo apt-get --yes --force-yes upgrade
+sudo apt-get --yes --force-yes update
+
+git clone https://github.com/wm-robo-ops/pi-clients.git ~
+git clone https://github.com/wm-robo-ops/servos.git ~
+
+sudo apt-get --yes --force-yes install vim
+cp ./vimrc ~/.vimrc
