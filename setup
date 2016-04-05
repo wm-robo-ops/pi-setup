@@ -6,5 +6,7 @@ sudo apt-get --yes --force-yes update
 git clone https://github.com/wm-robo-ops/pi-clients.git ~
 git clone https://github.com/wm-robo-ops/servos.git ~
 
+git clone https://github.com/adafruit/Adafruit_Python_BNO055.git
+
 sudo apt-get --yes --force-yes install vim
 cp ./vimrc ~/.vimrc
