@@ -12,6 +12,11 @@ sudo apt-get --yes --force-yes install vim
 cp ./vimrc ~/.vimrc
 
 sudo apt-get --yes --force-yes install gpsd gpsd-clients
+sudo systemctl stop gpsd.socket
+sudo systemctl disable gpsd.socket
+
+sudo apt-get --yes --force-yes purge libreoffice-core libreoffice-common wolfram-engine minecraft-pi sonic-pi
+sudo apt-get --yes --purge autoremove
 
 cd Adafruit_Python_BNO055
 sudo python setup.py install
