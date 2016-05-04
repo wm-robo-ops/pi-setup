@@ -20,3 +20,6 @@ sudo apt-get --yes --purge autoremove
 
 cd Adafruit_Python_BNO055
 sudo python setup.py install
+sudo raspi-config nonint do_serial 1
+sudo systemctl disable serial-getty@ttyAMA0.service
+
