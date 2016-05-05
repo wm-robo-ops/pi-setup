@@ -6,22 +6,42 @@ sudo apt-get --yes --force-yes update
 git clone https://github.com/wm-robo-ops/pi-clients.git ~
 git clone https://github.com/wm-robo-ops/servos.git ~
 
-git clone https://github.com/adafruit/Adafruit_Python_BNO055.git
-
+# VIM
 sudo apt-get --yes --force-yes install vim
-cp ./vimrc ~/.vimrc
+cp -f ./vimrc ~/.vimrc
 
+# NMap for finding other hosts on this subnet
+sudo apt-get --yes --force-yes install nmap
+
+# Python Netifaces for clients
 sudo apt-get --yes --force-yes install python-netifaces
 
+# Install gpsd and cgps
 sudo apt-get --yes --force-yes install gpsd gpsd-clients
+# Don't start system service so we can restart when needed
 sudo systemctl stop gpsd.socket
 sudo systemctl disable gpsd.socket
 
+# Remove big stuff (difference between jessie and jessie-lite)
 sudo apt-get --yes --force-yes purge libreoffice-core libreoffice-common wolfram-engine minecraft-pi sonic-pi
 sudo apt-get --yes --purge autoremove
 
+# Install BNO055 python library
+git clone https://github.com/adafruit/Adafruit_Python_BNO055.git
+# Compile and install
 cd Adafruit_Python_BNO055
 sudo python setup.py install
+
+# Disable serial console on UART pins 14-15 (same as interactive Advanced Options -> A8 Serial Console)
 sudo raspi-config nonint do_serial 1
+# Disable serial console on /dev/ttyAMA0
 sudo systemctl disable serial-getty@ttyAMA0.service
+
+# Custom overlay
+if [ -z "`grep pi3-miniuart-bt /boot/config.txt`" ] ; then
+	echo -e "\n# Disable bt on miniuart\ndtoverlay=pi3-miniuart-bt" | sudo tee -a /boot/config.txt
+	echo -e "\e[31mOverlay changed. Reboot required!"
+fi
+# Disable bluetooth
+sudo systemctl disable hciuart
 
